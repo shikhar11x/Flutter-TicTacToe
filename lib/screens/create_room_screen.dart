@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:tictactoe/responsive/responsive.dart';
+import 'package:tictactoe/widgets/custom_button.dart';
 import 'package:tictactoe/widgets/custom_text.dart';
+import 'package:tictactoe/widgets/custom_textfield.dart';
 
 class CreateRoomScreen extends StatefulWidget {
   static String routeName = '/create-room';
@@ -11,20 +14,40 @@ class CreateRoomScreen extends StatefulWidget {
 }
 
 class _CreateRoomScreenState extends State<CreateRoomScreen> {
+  final TextEditingController _nameController = TextEditingController();
+
+  @override
+  void dispose() {
+    super.dispose();
+    _nameController.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
     return Scaffold(
-      body: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [CustomText(shadow: [
-            Shadow(
-              blurRadius: 40,
-              color: Color(0xFF6A5AE0),
-            )
-          ], text: 'Create Room', fontSize: 70)],
+      body: Responsive(
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CustomText(
+                shadow: [Shadow(blurRadius: 40, color: Color(0xFF6A5AE0))],
+                text: 'Create Room',
+                fontSize: 70,
+              ),
+              SizedBox(height: size.height * 0.08),
+              CustomTextfield(
+                controller: _nameController,
+                hintText: "Enter your nick name",
+              ),
+              SizedBox(height: size.height * 0.045),
+              CustomButton(onTap: () {}, text: "Create"),
+            ],
+          ),
         ),
       ),
     );
